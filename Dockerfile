@@ -7,11 +7,8 @@ WORKDIR /app
 #Copy the dependencies to work dir.
 COPY requirements.txt .
 
-#Install dependencies
-RUN pip install -r requirements.txt
-
-#Create an user to avoid root privilege
-RUN useradd -m -s /bin/bash cloudcart
+#Install dependencies and Create an user to avoid root privilege
+RUN pip install -r --no-cache-dir requirements.txt && useradd -m -s /bin/bash cloudcart
 
 #Copy rest of code to workdir
 COPY . .
