@@ -1,0 +1,36 @@
+services:
+
+  flaskapp:
+    build: .
+    container_name: webapp
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgresql
+      DB_NAME: shopdb
+      DB_USER: shopuser
+      DB_PASSWORD: shoppass
+
+  postgresql:
+    image: postgres:16
+    container_name: cloudcartdb
+    environment:
+      POSTGRES_DB: shopdb
+      POSTGRES_USER: shopuser
+      POSTGRES_PASSWORD: shoppass
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    ports:
+      - "5432:5432" 
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+volumes:
+  postgresql_data:

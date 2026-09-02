@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudCart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; color: #222; }
+        header { background: #111827; color: white; padding: 22px 8%; }
+        header h1 { margin: 0 0 5px; }
+        header p { margin: 0; color: #cbd5e1; }
+        main { padding: 35px 8%; }
+        #products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 3px 12px rgba(0,0,0,.08); }
+        .price { font-size: 22px; font-weight: bold; margin: 15px 0 5px; }
+        .stock { color: #475569; }
+        .status { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>CloudCart</h1>
+    <p>A small e-commerce application for Docker, GitHub Actions and Kubernetes practice</p>
+</header>
+
+<main>
+    <div class="status" id="status">Loading products...</div>
+    <section id="products"></section>
+</main>
+
+<script>
+async function loadProducts() {
+    const status = document.getElementById("status");
+    const container = document.getElementById("products");
+
+    try {
+        const response = await fetch("/api/products");
+        if (!response.ok) throw new Error("API request failed");
+
+        const products = await response.json();
+
+        container.innerHTML = products.map(p => `
+            <div class="card">
+                <h2>${p.name}</h2>
+                <p>${p.description}</p>
+                <div class="price">₹${Number(p.price).toLocaleString("en-IN")}</div>
+                <div class="stock">Stock: ${p.stock}</div>
+            </div>
+        `).join("");
+
+        status.textContent = `${products.length} products available`;
+    } catch (error) {
+        status.textContent = "Unable to load products.";
+        console.error(error);
+    }
+}
+
+loadProducts();
+</script>
+</body>
+</html>
