@@ -1,5 +1,5 @@
 #Pull the image
-FROM python:3.12
+FROM python:3.12-slim
 
 #Set the work-directory
 WORKDIR /app
