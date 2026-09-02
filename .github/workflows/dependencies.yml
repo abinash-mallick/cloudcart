@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  scan:
+  scan-dependencies:
     runs-on: ubuntu-latest
 
     steps:
