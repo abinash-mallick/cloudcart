@@ -3,7 +3,7 @@
 name: Builds, Scans and pushes the container image
 
 on: 
- workflow_dispatch:
+ workflow_call:
 
 jobs:
   build-image:
