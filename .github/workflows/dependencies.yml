@@ -3,7 +3,7 @@
 name: Scans dependencies for known vulnerabilities
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   scan-dependencies:
