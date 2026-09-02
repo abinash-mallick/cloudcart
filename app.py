@@ -13,6 +13,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "shoppass")
 DB_PORT = os.getenv("DB_PORT", "5432")
 
 def get_db():
+"""Get the database details."""
     return psycopg2.connect(
         host=DB_HOST,
         database=DB_NAME,
@@ -22,6 +23,7 @@ def get_db():
     )
 
 def init_db():
+"""Initialize the database."""
     conn = get_db()
     cur = conn.cursor()
     cur.execute("""
@@ -58,6 +60,7 @@ def home():
 
 @app.route("/health")
 def health():
+"""This is the health check"""
     try:
         conn = get_db()
         conn.close()
@@ -67,6 +70,7 @@ def health():
 
 @app.route("/api/products", methods=["GET"])
 def products():
+"""Product details"""
     conn = get_db()
     cur = conn.cursor(cursor_factory=RealDictCursor)
     cur.execute("SELECT id, name, description, price, stock FROM products ORDER BY id")
@@ -77,6 +81,7 @@ def products():
 
 @app.route("/api/products", methods=["POST"])
 def add_product():
+"""Add new products."""
     data = request.get_json(silent=True) or {}
 
     required = ["name", "description", "price", "stock"]
