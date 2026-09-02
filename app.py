@@ -60,7 +60,7 @@ def home():
 
 @app.route("/health")
 def health():
-"""This is the health check"""
+    """This is the health check"""
     try:
         conn = get_db()
         conn.close()
