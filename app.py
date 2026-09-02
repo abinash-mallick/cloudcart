@@ -56,6 +56,7 @@ def init_db():
 
 @app.route("/")
 def home():
+    """Render the CloudCart home page."""
     return render_template("index.html")
 
 @app.route("/health")
@@ -65,7 +66,7 @@ def health():
         conn = get_db()
         conn.close()
         return jsonify({"status": "healthy", "database": "connected"}), 200
-    except Exception as exc:
+    except psycopg2.Error as exc:
         return jsonify({"status": "unhealthy", "error": str(exc)}), 503
 
 @app.route("/api/products", methods=["GET"])
