@@ -1,3 +1,4 @@
+"""CloudCart Flask application."""
 import os
 from flask import Flask, jsonify, request, render_template
 import psycopg2
