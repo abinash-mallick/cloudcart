@@ -39,7 +39,7 @@ def init_db():
     count = cur.fetchone()[0]
 
     if count == 0:
-        products = [
+        initial_products = [
             ("Wireless Headphones", "Bluetooth over-ear headphones", 2499.00, 25),
             ("Smart Watch", "Fitness and notification smartwatch", 3299.00, 18),
             ("Laptop Stand", "Adjustable aluminum laptop stand", 1499.00, 40),
@@ -48,7 +48,7 @@ def init_db():
         ]
         cur.executemany(
             "INSERT INTO products (name, description, price, stock) VALUES (%s, %s, %s, %s)",
-            products
+            initial_products
         )
     conn.commit()
     cur.close()
