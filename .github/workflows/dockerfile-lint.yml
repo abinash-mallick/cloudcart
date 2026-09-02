@@ -3,7 +3,7 @@
 name: Lint the Dockerfile
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   dockerfile-lint:
