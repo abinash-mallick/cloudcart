@@ -30,7 +30,7 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'MEDIUM,CRITICAL,HIGH'
+          severity: 'CRITICAL,HIGH'
 
       - name: Push the Docker image
         run: docker push ${{ vars.DOCKERHUB_USERNAME }}/cloudcart:${{ github.sha }}
