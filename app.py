@@ -11,6 +11,7 @@ DB_NAME = os.getenv("DB_NAME", "shopdb")
 DB_USER = os.getenv("DB_USER", "shopuser")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "shoppass")
 DB_PORT = os.getenv("DB_PORT", "5432")
+unused_variable = "test"
 
 def get_db():
     """Get the database details."""
