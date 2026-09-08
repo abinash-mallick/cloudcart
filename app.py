@@ -44,7 +44,13 @@ def init_db():
             ("Smart Watch", "Fitness and notification smartwatch", 3299.00, 18),
             ("Laptop Stand", "Adjustable aluminum laptop stand", 1499.00, 40),
             ("USB-C Hub", "6-in-1 USB-C hub", 1899.00, 30),
-            ("Travel Backpack", "Water-resistant laptop backpack", 2199.00, 15)
+            ("Travel Backpack", "Water-resistant laptop backpack", 2199.00, 15),
+            ('Wireless Mouse', 'Ergonomic wireless mouse', 599.00, 25),
+            ('Mechanical Keyboard', 'RGB mechanical keyboard', 2499.00, 15),
+            ('USB-C Hub', '7-in-1 USB-C hub', 1299.00, 30),
+            ("Bluetooth Speaker", "Portable Bluetooth speaker with deep bass", 1799.00, 28),
+            ("Webcam", "Full HD USB webcam with built-in microphone", 1599.00, 22),
+            ("Power Bank", "10000mAh fast-charging power bank", 1299.00, 45);
         ]
         cur.executemany(
             "INSERT INTO products (name, description, price, stock) VALUES (%s, %s, %s, %s)",
