@@ -50,7 +50,7 @@ def init_db():
             ('USB-C Hub', '7-in-1 USB-C hub', 1299.00, 30),
             ("Bluetooth Speaker", "Portable Bluetooth speaker with deep bass", 1799.00, 28),
             ("Webcam", "Full HD USB webcam with built-in microphone", 1599.00, 22),
-            ("Power Bank", "10000mAh fast-charging power bank", 1299.00, 45);
+            ("Power Bank", "10000mAh fast-charging power bank", 1299.00, 45)
         ]
         cur.executemany(
             "INSERT INTO products (name, description, price, stock) VALUES (%s, %s, %s, %s)",
