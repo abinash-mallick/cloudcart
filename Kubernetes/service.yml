@@ -1,0 +1,37 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: app-service
+  namespace: cloudcart-ns
+
+spec:
+  type: NodePort
+  selector:
+   app: cloudcart
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30007
+
+---
+
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: db-service
+  namespace: cloudcart-ns
+
+spec:
+  type: ClusterIP
+  selector:
+   app: postgresql
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      
+
+

@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+
+metadata:
+  name: postgres-config
+  namespace: cloudcart-ns
+
+data:
+  username: shopuser
+  database: shopdb
+        
+               

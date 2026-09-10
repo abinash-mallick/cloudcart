@@ -1,0 +1,18 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+
+metadata:
+  name: psql-pvc
+  namespace: cloudcart-ns
+
+spec:
+  resources:
+    requests:
+      storage: 5Gi
+  
+  accessModes:
+    - ReadWriteOnce
+
+  volumeMode: Filesystem
+
+  storageClassName: standard

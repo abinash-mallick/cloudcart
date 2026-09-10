@@ -1,0 +1,107 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: cloudcart-deployment
+  namespace: cloudcart-ns
+  labels:
+    app: cloudcart
+
+spec:
+    replicas: 3
+    selector:
+      matchLabels:
+       app: cloudcart
+    template:
+      metadata:
+        labels:
+          app: cloudcart
+      spec:
+        containers:
+        - name: cloudcart-container
+          image: abinashmallick/cloudcart:c39d5b54a1a00fc7592173c8f891040633464503
+          ports:
+          - containerPort: 5000
+          env:
+            - name: DB_HOST
+              value: "db-service"
+          startupProbe:
+            httpGet:    
+              path: /health
+              port: 5000
+            failureThreshold: 20
+            periodSeconds: 5
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            periodSeconds: 5
+
+---
+
+kind: StatefulSet
+apiVersion: apps/v1
+
+metadata:
+  name: db-statefulset
+  namespace: cloudcart-ns
+  labels:
+    app: postgresql
+spec:
+  replicas: 1
+  serviceName: postgres-headless
+  selector:
+    matchLabels:
+      app: postgresql
+
+  template:
+    metadata:
+      labels:
+        app: postgresql
+
+    spec:
+      containers:
+      - name: postgresql-db
+        
+        image: postgres:latest
+        
+        ports:
+        - containerPort: 5432
+        
+        env:
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: database
+
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                name: postgres-config
+                key: username
+
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: password
+        
+        volumeMounts: 
+          - name: psql-volume
+            mountPath: /var/lib/postgresql
+
+      volumes:
+       - name: psql-volume
+         persistentVolumeClaim:
+          claimName: psql-pvc
